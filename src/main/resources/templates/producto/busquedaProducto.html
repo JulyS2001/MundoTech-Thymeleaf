@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Resultados de Búsqueda</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+	<div th:replace="componentes/navbar :: navbar"></div>
+
+	<div class="container mt-4">
+		<h3 class="mb-4">Resultados para: "<span th:text="${param.nombre}"></span>"</h3>
+
+		<!-- Si no se encuentran productos -->
+		<div th:if="${productos.isEmpty()}">
+			<div class="alert alert-warning">
+				No se encontraron productos con ese nombre.
+			</div>
+		</div>
+		
+		<div class="jumbotron text-center">
+
+		<!-- Si hay productos -->
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" th:unless="${productos.isEmpty()}">
+			<div class="col" th:each="producto : ${productos}">
+				<a th:href="@{/verDetalleProducto/{id}(id=${producto.idProducto})}" style="text-decoration: none; color: inherit;">
+				<div class="card h-100">
+					<img th:src="@{/images/{img}(img=${producto.imagen})}" class="card-img-top" alt="imagen">
+					<div class="card-body">
+						<h5 class="card-title" th:text="${producto.nombre}">Nombre</h5>
+					</div>
+					<div class="card-footer">
+						<strong>$<span th:text="${producto.precio}"></span></strong>
+					</div>
+				</div>
+				</a>
+			</div>
+		</div>
+		
+		<!-- Productos similares opcional (si lo implementás en el controlador) -->
+		 <div class="mt-5" th:if="${similares != null and !similares.isEmpty()}">
+		     <h4>También te podrían interesar:</h4>
+		     <div class="row row-cols-1 row-cols-md-3 g-4">
+		         <div class="col" th:each="prod : ${similares}">
+		             <div class="card h-100 border-secondary">
+		                 <img th:src="@{/images/{img}(img=${prod.imagen})}" class="card-img-top" alt="imagen">
+		                 <div class="card-body">
+		                     <h5 class="card-title" th:text="${prod.nombre}"></h5>
+		                     <p class="card-text" th:text="${prod.descripcion}"></p>
+		                 </div>
+		                 <div class="card-footer">
+		                     <strong>$<span th:text="${prod.precio}"></span></strong>
+		                     <form th:action="@{/carritoAgregar}" method="post" class="d-inline">
+		                         <input type="hidden" name="idProducto" th:value="${prod.idProducto}" />
+		                         <input type="hidden" name="cantidad" value="1" />
+		                         <button class="btn btn-outline-success btn-sm" type="submit">Agregar</button>
+		                     </form>
+		                 </div>
+		             </div>
+		         </div>
+		     </div>
+		 </div>
+		
+	</div>
+	
+	</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

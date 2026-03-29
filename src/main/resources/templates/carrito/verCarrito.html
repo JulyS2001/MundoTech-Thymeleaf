@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div th:replace="componentes/navbar :: navbar"></div>
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Tu carrito de compras</h2>
+
+        <div th:if="${items.isEmpty()}">
+            <p>El carrito está vacío.</p>
+        </div>
+
+        <div th:unless="${items.isEmpty()}">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col" th:each="item : ${items}">
+                    <div class="card mb-3 shadow-sm">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img th:src="@{/images/{img}(img=${item.producto.imagen})}" class="img-fluid rounded-start" alt="Imagen producto">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${item.producto.nombre}">Nombre del producto</h5>
+                                    <p class="card-text" th:text="${item.producto.descripcion}">Descripción</p>
+                                    <p class="card-text mb-1">Precio unitario: $<span th:text="${item.producto.precio}">0.00</span></p>
+                                    <p class="card-text mb-1">Cantidad: <span th:text="${item.cantidad}">1</span></p>
+                                    <p class="card-text">Subtotal: $<span th:text="${item.producto.precio * item.cantidad}">0.00</span></p>
+                                    <a th:href="@{/carritoEliminar(idProducto=${item.producto.idProducto})}" class="btn btn-danger btn-sm">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="mt-4">Total: $<span th:text="${total}">0.00</span></h4>
+
+            <form th:action="@{/carritoConfirmar}" method="post">
+                <input type="hidden" name="idUsuario" th:value="${idUsuario}">
+                <button type="submit" class="btn btn-primary">Confirmar compra</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

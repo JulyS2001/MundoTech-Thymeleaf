@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ep-dry-cherry-am4t9wja-pooler.c-5.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+    username: neondb_owner
+    password: npg_7hyeJ4ZaHcfz
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
