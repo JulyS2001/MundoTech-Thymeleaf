@@ -62,15 +62,17 @@ public class productoController {
 	}
 
 	@PostMapping("/crearProducto")
-	public ModelAndView crearProducto(@RequestParam String nombre, @RequestParam String descripcion,
-			@RequestParam float precio, @RequestParam MultipartFile imagen, @RequestParam int stock,
+	public ModelAndView crearProducto(
+			@RequestParam String nombre,
+			@RequestParam String descripcion,
+			@RequestParam float precio,
+			@RequestParam String imagen,
+			@RequestParam int stock,
 			@RequestParam int idCategoria) {
 
 		ModelAndView mav = new ModelAndView("producto/listaProductos");
-		
-		String nombreArchivo = guardarImagen(imagen);
 
-		productoService.crearProducto(nombre, descripcion, precio, nombreArchivo, stock, idCategoria);
+		productoService.crearProducto(nombre, descripcion, precio, imagen, stock, idCategoria);
 
 		mav.addObject("productos", productoService.listarProductos());
 		
@@ -91,13 +93,11 @@ public class productoController {
 	                                       @RequestParam String nombre,
 	                                       @RequestParam String descripcion,
 	                                       @RequestParam float precio,
-	                                       @RequestParam MultipartFile imagen,
+	                                       @RequestParam String imagen,
 	                                       @RequestParam int stock,
 	                                       @RequestParam int idCategoria) {
 		   
-		   String nombreArchivo = guardarImagen(imagen);
-
-	        productoService.actualizarProducto(id, nombre, descripcion, precio, nombreArchivo, stock, idCategoria);
+	        productoService.actualizarProducto(id, nombre, descripcion, precio, imagen, stock, idCategoria);
 	        
 	        ModelAndView mav = new ModelAndView("producto/listaProductos");
 	        mav.addObject("productos", productoService.listarProductos());
@@ -112,7 +112,9 @@ public class productoController {
 	        mav.addObject("productos", productoService.listarProductos());
 	        return mav; 
 	    }
-	 
+
+	 //En caso de querer guardar la imagen como archivo
+	 /*
 	 private String guardarImagen(MultipartFile archivo) {
 	        if (archivo.isEmpty()) return "default.jpg"; // Imagen por defecto
 
@@ -126,6 +128,7 @@ public class productoController {
 	            return "default.jpg";
 	        }
 	    }
+	    */
 	 
 	 @GetMapping("/verDetalleProducto/{id}")
 	 public ModelAndView verDetalleProducto(@PathVariable("id") int id) {
