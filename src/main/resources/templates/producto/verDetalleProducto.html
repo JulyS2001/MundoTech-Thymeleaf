@@ -13,7 +13,7 @@
 	<div class="container mt-5">
 		<div class="row">
 			<div class="col-md-6">
-				<img th:src="@{/images/{img}(img=${producto.imagen})}" class="img-fluid" alt="Imagen producto">
+				<img th:src="${producto.imagen" class="img-fluid" alt="Imagen producto">
 			</div>
 			<div class="col-md-6">
 				<h2 th:text="${producto.nombre}">Nombre del producto</h2>

@@ -19,7 +19,7 @@
 
 						<h3 class="mb-4 text-center">Editar Producto</h3>
 
-						<form th:action="@{/editarProducto}" method="post" enctype="multipart/form-data">
+						<form th:action="@{/editarProducto}" method="post">
 							<input type="hidden" name="id" th:value="${producto.idProducto}" />
 
 							<div class="mb-3">
