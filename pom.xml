@@ -13,9 +13,9 @@
 	</parent>
 	
 	<groupId>com.oo2</groupId>
-	<artifactId>grupo4</artifactId>
+	<artifactId>mundotech</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>grupo4</name>
+	<name>mundotech</name>
 	<description>MundoTech</description>
 
 	<properties>
